@@ -13,7 +13,7 @@ cat << EOF
 ╚══════════════════════════════════════════════╝
 
 EOF
-echo "This script will run in 5 sec. Press Ctrl+C if you want to stop running the script!!!"
+echo "This script will run in 5 sec. Press Ctrl+C if you want to stop running the script!!!\n\n"
 
 sleep 5
 
@@ -84,6 +84,10 @@ echo " - Install default page for BBB --------------------------- [Ok]"
 
 sleep 1
 
+echo "Apply UFW rules...\n\n"
+
+enableUFWRules
+
 cat << EOF
 ╔═════════════════════════════════════════════╗
 ║                                             ║
@@ -91,5 +95,3 @@ cat << EOF
 ║                                             ║
 ╚═════════════════════════════════════════════╝
 EOF
-
-#enableUFWRules
