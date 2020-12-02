@@ -90,7 +90,6 @@ enableUFWRules
 
 cat << EOF
 
-
 ╔═════════════════════════════════════════════╗
 ║                                             ║
 ║       All setting done successfully         ║
