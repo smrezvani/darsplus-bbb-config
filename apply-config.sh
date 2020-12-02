@@ -13,16 +13,16 @@ cat << EOF
 ╚══════════════════════════════════════════════╝
 
 EOF
-echo "This script will run in 5 sec. Press Ctrl+C if you want to stop running the script!!!"\n\n
+printf "This script will run in 5 sec. Press Ctrl+C if you want to stop running the script!!!\n\n"
 
 sleep 5
 
 if [[ ! -f ./bigbluebutton.properties.org ]]
 then
     cp /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties bigbluebutton.properties.org
-    echo " - Backup bigbluebutton.properties ------------------------ [Ok]"
+    echo "  - Backup bigbluebutton.properties ------------------------ [Ok]"
 else
-    echo " - bigbluebutton.properties backup exist ------------------ [Ok]"
+    echo "  - bigbluebutton.properties backup exist ------------------ [Ok]"
 fi
 
 
@@ -43,7 +43,7 @@ sleep 1
 
 sed -i "s,^securitySalt=.*,securitySalt=$SALT,g" /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 
-echo " - Apply change to bigbluebutton.properties --------------- [Ok]"
+echo "  - Apply change to bigbluebutton.properties --------------- [Ok]"
 sleep 1
 
 # Last version of settings
@@ -71,7 +71,7 @@ sleep 1
 chmod 444 /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
 chown 995:995 /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
 
-echo " - Apply new seeting to BBB setting.yml ------------------- [Ok]"
+echo "  - Apply new seeting to BBB setting.yml ------------------- [Ok]"
 
 sleep 1
 
@@ -80,11 +80,11 @@ sed -i '2i<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v26.0.2
 
 rm -rf /var/www/bigbluebutton-default/* && cp -r bbb-default-page-main/* /var/www/bigbluebutton-default/
 
-echo " - Install default page for BBB --------------------------- [Ok]"
+printf "  - Install default page for BBB --------------------------- [Ok]\n\n"
 
 sleep 1
 
-echo "Apply UFW rules..."\n\n
+echo "Apply UFW rules..."
 
 enableUFWRules
 
