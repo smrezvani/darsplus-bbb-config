@@ -5,7 +5,7 @@ source /etc/bigbluebutton/bbb-conf/apply-lib.sh
 
 # Latest version of properties
 cat << EOF
-╔═════════════════════════════════════════════=╗
+╔══════════════════════════════════════════════╗
 ║                                              ║
 ║           Start to apply configs...!         ║
 ║       This script made for DarsPlus.com      ║
@@ -19,9 +19,10 @@ if [[ ! -f ./bigbluebutton.properties.org ]]
 then
     cp /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties bigbluebutton.properties.org
     echo " - Backup bigbluebutton.properties ------------------------ [Ok]"
+else
+    echo " - bigbluebutton.properties backup exist ------------------ [Ok]"
 fi
 
-echo " - bigbluebutton.properties backup exist ------------------ [Ok]"
 
 cp bigbluebutton.properties /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 chmod 444 /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
@@ -68,21 +69,21 @@ sleep 1
 chmod 444 /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
 chown 995:995 /usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
 
-echo " - Apply new seeting to BBB setting.yml ---------------- [Ok]"
+echo " - Apply new seeting to BBB setting.yml ------------------- [Ok]"
 
 sleep 5
 
 sed -i "s:Source Sans Pro:Vazir:g" /usr/share/meteor/bundle/programs/web.browser/head.html
 sed -i '2i<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v26.0.2/dist/font-face.css" rel="stylesheet" type="text/css" />' /usr/share/meteor/bundle/programs/web.browser/head.html
 
-cd /var/www/bigbluebutton-default && rm -rf * && wget https://github.com/smrezvani/bbb-default-page/archive/main.zip && unzip -q main.zip && rm -rf main.zip && mv bbb-default-page-main/* . && rm -rf bbb-default-page-main
+cd /var/www/bigbluebutton-default && rm -rf * && wget https://github.com/smrezvani/bbb-default-page/archive/main.zip 2>&1 /dev/null && unzip -q main.zip && rm -rf main.zip && mv bbb-default-page-main/* . && rm -rf bbb-default-page-main
 
 echo " - Install default page for BBB --------------------------- [Ok]"
 
 sleep 5
 
 cat << EOF
-╔════════════════════════════════════════════=╗
+╔═════════════════════════════════════════════╗
 ║                                             ║
 ║       All setting done successfully         ║
 ║                                             ║
