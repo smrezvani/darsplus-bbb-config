@@ -13,11 +13,9 @@ cat << EOF
 ╚══════════════════════════════════════════════╝
 
 EOF
-echo "This script will run in 5 sec. Press Ctrl+C if you want to stop running the script!!!\n\n"
+echo "This script will run in 5 sec. Press Ctrl+C if you want to stop running the script!!!"\n\n
 
 sleep 5
-
-cd /root
 
 if [[ ! -f ./bigbluebutton.properties.org ]]
 then
@@ -80,13 +78,13 @@ sleep 1
 sed -i "s:Source Sans Pro:Vazir:g" /usr/share/meteor/bundle/programs/web.browser/head.html
 sed -i '2i<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v26.0.2/dist/font-face.css" rel="stylesheet" type="text/css" />' /usr/share/meteor/bundle/programs/web.browser/head.html
 
-cd /var/www/bigbluebutton-default && rm -rf * && wget -q https://github.com/smrezvani/bbb-default-page/archive/main.zip && unzip -qq main.zip && rm -rf main.zip && mv bbb-default-page-main/* . && rm -rf bbb-default-page-main
+rm -rf /var/www/bigbluebutton-default/* && cp bbb-default-page-main/* /var/www/bigbluebutton-default/
 
 echo " - Install default page for BBB --------------------------- [Ok]"
 
 sleep 1
 
-echo "Apply UFW rules...\n\n"
+echo "Apply UFW rules..."\n\n
 
 enableUFWRules
 
