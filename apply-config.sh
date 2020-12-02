@@ -78,7 +78,7 @@ sleep 1
 sed -i "s:Source Sans Pro:Vazir:g" /usr/share/meteor/bundle/programs/web.browser/head.html
 sed -i '2i<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v26.0.2/dist/font-face.css" rel="stylesheet" type="text/css" />' /usr/share/meteor/bundle/programs/web.browser/head.html
 
-rm -rf /var/www/bigbluebutton-default/* && cp bbb-default-page-main/* /var/www/bigbluebutton-default/
+rm -rf /var/www/bigbluebutton-default/* && cp -r bbb-default-page-main/* /var/www/bigbluebutton-default/
 
 echo " - Install default page for BBB --------------------------- [Ok]"
 
