@@ -17,6 +17,8 @@ echo "This script will run in 5 sec. Press Ctrl+C if you want to stop running th
 
 sleep 5
 
+cd /root
+
 if [[ ! -f ./bigbluebutton.properties.org ]]
 then
     cp /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties bigbluebutton.properties.org
