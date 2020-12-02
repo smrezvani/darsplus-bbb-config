@@ -11,9 +11,11 @@ cat << EOF
 ║       This script made for DarsPlus.com      ║
 ║ *** Attention: Don't run on your servers *** ║
 ╚══════════════════════════════════════════════╝
+
 EOF
-echo "This script will run in 15 sec. Press Ctrl+C if you want to stop running the script!!!"
-sleep 15
+echo "This script will run in 5 sec. Press Ctrl+C if you want to stop running the script!!!"
+
+sleep 5
 
 if [[ ! -f ./bigbluebutton.properties.org ]]
 then
@@ -26,7 +28,7 @@ fi
 
 cp bigbluebutton.properties /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 chmod 444 /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
-sleep 5
+sleep 1
 
 FQDN=$(sed -n -e '/screenshareRtmpServer/ s/.*\= *//p' bigbluebutton.properties.org)
 SALT=$(sed -n -e '/securitySalt/ s/.*\= *//p' bigbluebutton.properties.org)
@@ -42,7 +44,7 @@ sleep 1
 sed -i "s,^securitySalt=.*,securitySalt=$SALT,g" /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 
 echo " - Apply change to bigbluebutton.properties --------------- [Ok]"
-sleep 5
+sleep 1
 
 # Last version of settings
 HTML5_CONFIG=/usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
@@ -71,20 +73,16 @@ chown 995:995 /usr/share/meteor/bundle/programs/server/assets/app/config/setting
 
 echo " - Apply new seeting to BBB setting.yml ------------------- [Ok]"
 
-sleep 5
+sleep 1
 
 sed -i "s:Source Sans Pro:Vazir:g" /usr/share/meteor/bundle/programs/web.browser/head.html
 sed -i '2i<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v26.0.2/dist/font-face.css" rel="stylesheet" type="text/css" />' /usr/share/meteor/bundle/programs/web.browser/head.html
 
-cd /var/www/bigbluebutton-default && rm -rf * && wget -bqc https://github.com/smrezvani/bbb-default-page/archive/main.zip
-
-sleep 5
-
-unzip -qq main.zip && rm -rf main.zip && mv bbb-default-page-main/* . && rm -rf bbb-default-page-main
+cd /var/www/bigbluebutton-default && rm -rf * && wget -q https://github.com/smrezvani/bbb-default-page/archive/main.zip && unzip -qq main.zip && rm -rf main.zip && mv bbb-default-page-main/* . && rm -rf bbb-default-page-main
 
 echo " - Install default page for BBB --------------------------- [Ok]"
 
-sleep 5
+sleep 1
 
 cat << EOF
 ╔═════════════════════════════════════════════╗
