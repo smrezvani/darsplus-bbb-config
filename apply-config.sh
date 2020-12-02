@@ -89,6 +89,8 @@ echo "Apply UFW rules..."
 enableUFWRules
 
 cat << EOF
+
+
 ╔═════════════════════════════════════════════╗
 ║                                             ║
 ║       All setting done successfully         ║
