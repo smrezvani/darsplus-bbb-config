@@ -7,24 +7,16 @@ source /etc/bigbluebutton/bbb-conf/apply-lib.sh
 cat << EOF
 ╔══════════════════════════════════════════════════════════════════════════=╗
 ║                                                                           ║
-║ Copy the latest version of "bbigbluebutton.properties" file to respective ║
+║ Copy the latest version of "bigbluebutton.properties" file to respective  ║
 ║ destination with correct permission                                       ║
 ║                                                                           ║
 ╚═══════════════════════════════════════════════════════════════════════════╝
 EOF
+
 cp /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties bigbluebutton.properties.org
 cp bigbluebutton.properties /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 chmod 444 /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 sleep 5
-
-cat << EOF
-╔═════════════════════════════════════════════════════=╗
-║                                                      ║
-║       Input server FQDN withouth http or https       ║
-║       something like this: bbb.domain.com            ║
-║                                                      ║
-╚══════════════════════════════════════════════════════╝
-EOF
 
 FQDN=$(sed -n -e '/screenshareRtmpServer/ s/.*\= *//p' bigbluebutton.properties.org)
 SALT=$(sed -n -e '/securitySalt/ s/.*\= *//p' bigbluebutton.properties.org)
@@ -33,8 +25,7 @@ sed -i "s,^bigbluebutton.web.serverURL=.*,bigbluebutton.web.serverURL=https://$F
 sed -i "s,^screenshareRtmpServer=.*,screenshareRtmpServer=$FQDN,g" /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 sed -i "s,^securitySalt=.*,securitySalt=$SALT,g" /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 
-#       latest version of settings
-echo "  - change seting to html5"
+# Last version of settings
 HTML5_CONFIG=/usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
 
 yq w -i $HTML5_CONFIG public.app.audioChatNotification true
