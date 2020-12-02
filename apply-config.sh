@@ -76,7 +76,7 @@ sleep 5
 sed -i "s:Source Sans Pro:Vazir:g" /usr/share/meteor/bundle/programs/web.browser/head.html
 sed -i '2i<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v26.0.2/dist/font-face.css" rel="stylesheet" type="text/css" />' /usr/share/meteor/bundle/programs/web.browser/head.html
 
-cd /var/www/bigbluebutton-default && rm -rf * && wget https://github.com/smrezvani/bbb-default-page/archive/main.zip 2>&1 /dev/null && unzip -q main.zip && rm -rf main.zip && mv bbb-default-page-main/* . && rm -rf bbb-default-page-main
+cd /var/www/bigbluebutton-default && rm -rf * && wget -bqc https://github.com/smrezvani/bbb-default-page/archive/main.zip && unzip -qq main.zip && rm -rf main.zip && mv bbb-default-page-main/* . && rm -rf bbb-default-page-main
 
 echo " - Install default page for BBB --------------------------- [Ok]"
 
@@ -90,4 +90,4 @@ cat << EOF
 ╚═════════════════════════════════════════════╝
 EOF
 
-enableUFWRules
+#enableUFWRules
