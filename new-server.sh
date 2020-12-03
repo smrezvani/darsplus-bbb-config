@@ -13,6 +13,7 @@
 ##
 
 function prepair_server() {
+
   printf "Change DNS to Shecan...\n"
 cat > /etc/resolv.conf << EOF
 nameserver 178.22.122.100
@@ -21,7 +22,7 @@ EOF
   sleep 2
     printf "Shecan is activated!\n\n"
     printf "Update the packages list...\n"
-    apt clean && apt update -qq
+    apt clean && apt update -q
   sleep 1
     echo ""
     echo "Input the server FQDN:"
@@ -34,9 +35,11 @@ EOF
     printf "Upgrade OS..."
     apt update && apt upgrade -y && apt autoremove -y
     dpkg-reconfigure tzdata
+
 }
 
 function private_cloud() {
+
   if [[! -f /etc/systemd/system/openconnect.service ]]
   then
     # Check openconnect is installed or not
@@ -75,9 +78,11 @@ EOF
   else
     printf "Service alredy configured. Check it man before any other change!!!"
   fi
+
 }
 
 function mount_nfs() {
+
   if [[ ! -d /nfs/ ]]
   then
     printf "Create NFS mount point...!"
@@ -89,6 +94,7 @@ function mount_nfs() {
   fi
   mount -a
   printf "The NFS partition mounted to the server...!"
+
 }
 
 function install_bbb() {
@@ -108,7 +114,12 @@ function install_bbb() {
       new_install
   fi
 
-  
+}
+
+function apply-config() {
+  chmod +x apply-config.sh
+  cp apply-config.sh /etc/bigbluebutton/bbb-conf/apply-config.sh
+  bbb-conf --restart
 }
 
 function new_install() {
@@ -128,6 +139,7 @@ function new_install() {
 ##
 # Color  Variables
 ##
+red='\e[31m'
 green='\e[32m'
 blue='\e[34m'
 clear='\e[0m'
@@ -144,12 +156,14 @@ ColorBlue(){
 }
 
 menu(){
+  clear
 echo -ne "
 What do you want to do?
 $(ColorGreen '1)') Prepare server for new instalation
 $(ColorGreen '2)') Connect to DarsPlus private cloud
 $(ColorGreen '3)') Create and mount NFS to the server 
 $(ColorGreen '4)') Install or Update BigBlueButton
+$(ColorGreen '5)') Apply needed configuration to BBB
 $(ColorGreen '0)') Exit
 $(ColorBlue 'Choose an option:') "
         read a
@@ -158,10 +172,21 @@ $(ColorBlue 'Choose an option:') "
 	        2) private_cloud ; clear ; menu ;;
 	        3) mount_nfs ; clear ; menu ;;
 	        4) install_bbb ; clear ; menu ;;
+          5) apply-config ; clear ; menu ;;
 		0) exit 0 ;;
-		*) echo -e $red"Wrong option."$clear; WrongCommand;;
+		*) echo -e $red"Wrong option."$clear; sleep 1; clear; menu;;
         esac
 }
 
 # Call the menu function
-menu
+check_root() {
+  if [ $EUID != 0 ]; 
+  then 
+    printf "You must run this script as root.\n";
+  else
+    clear
+    menu
+  fi
+}
+
+check_root
