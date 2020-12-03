@@ -12,15 +12,11 @@
 #   - Install exporter for Grafana 
 ##
 
-#server_name=$(hostname)
-
-
-
 function prepair_server() {
   printf "Change DNS to Shecan...\n"
-  cat > /etc/resolv.conf << EOF
-    nameserver 178.22.122.100
-    nameserver 185.51.200.2
+cat > /etc/resolv.conf << EOF
+nameserver 178.22.122.100
+nameserver 185.51.200.2
 EOF
   sleep 2
     printf "Shecan is activated!\n\n"
