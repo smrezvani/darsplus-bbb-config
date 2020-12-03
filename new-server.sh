@@ -173,7 +173,7 @@ $(ColorBlue 'Choose an option:') "
 	        3) mount_nfs ; clear ; menu ;;
 	        4) install_bbb ; clear ; menu ;;
           5) apply-config ; clear ; menu ;;
-		0) exit 0 ;;
+		0) clear; exit 0 ;;
 		*) echo -e $red"Wrong option."$clear; sleep 1; clear; menu;;
         esac
 }
