@@ -83,16 +83,17 @@ function mount_nfs() {
     printf "Create NFS mount point...!"
       mkdir /nfs
   fi
-  if grep -q nfs "/etc/fstab";
+  if ! grep -q nfs "/etc/fstab";
   then
     echo '192.168.100.230:/nfs /nfs/ nfs defaults 0 0' >> /etc/fstab
   fi
   mount -a
+  printf "The NFS partition mounted to the server...!"
 }
 
 function install_bbb() {
 
-  if [[! -f /etc/systemd/system/openconnect.service ]]
+  if [[ ! -f /etc/systemd/system/openconnect.service ]]
   then
       printf "OpenConnect service not running on the server.\n"
       printf "Do you need to connect to DarsPlus private cloud?"
@@ -124,7 +125,6 @@ function new_install() {
   wget -qO- https://ubuntu.bigbluebutton.org/bbb-install.sh | bash -s -- -v xenial-22 -s $FQDN -e $eMail -c $turnServer:$turnSecret -w
 }
 
-
 ##
 # Color  Variables
 ##
@@ -148,16 +148,16 @@ echo -ne "
 What do you want to do?
 $(ColorGreen '1)') Prepare server for new instalation
 $(ColorGreen '2)') Connect to DarsPlus private cloud
-$(ColorGreen '3)') Check private cloud connection 
+$(ColorGreen '3)') Create and mount NFS to the server 
 $(ColorGreen '4)') Install or Update BigBlueButton
 $(ColorGreen '0)') Exit
 $(ColorBlue 'Choose an option:') "
         read a
         case $a in
-	        1) prepair_server ; menu ;;
-	        2) private_cloud ; menu ;;
-	        3) mount_nfs ; menu ;;
-	        4) install_bbb ; menu ;;
+	        1) prepair_server ; clear ; menu ;;
+	        2) private_cloud ; clear ; menu ;;
+	        3) mount_nfs ; clear ; menu ;;
+	        4) install_bbb ; clear ; menu ;;
 		0) exit 0 ;;
 		*) echo -e $red"Wrong option."$clear; WrongCommand;;
         esac
