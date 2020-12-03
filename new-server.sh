@@ -25,7 +25,7 @@ EOF
   sleep 2
     printf "Shecan is activated!\n\n"
     printf "Update the packages list...\n"
-    apt clean && (apt update -qq 2> /dev/null)
+    apt clean && apt update -qq
   sleep 1
     echo ""
     echo "Input the server FQDN:"
