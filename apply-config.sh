@@ -56,7 +56,7 @@ yq w -i $HTML5_CONFIG public.app.copyright "@2020 DarsPlus ltd."
 yq w -i $HTML5_CONFIG public.app.helpLink https://darsplus.com/liveclass/
 yq w -i $HTML5_CONFIG public.app.enableNetworkInformation true
 #yq w -i $HTML5_CONFIG public.app.enableLimitOfViewersInWebcam true
-#yq w -i $HTML5_CONFIG public.app.mirrorOwnWebcam true
+yq w -i $HTML5_CONFIG public.app.mirrorOwnWebcam true
 yq w -i $HTML5_CONFIG public.app.breakoutRoomLimit 2
 yq w -i $HTML5_CONFIG public.app.defaultSettings.application.overrideLocale fa
 yq w -i $HTML5_CONFIG public.kurento.wsUrl wss://$FQDN/bbb-webrtc-sfu

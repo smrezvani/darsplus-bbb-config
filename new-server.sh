@@ -25,12 +25,12 @@ EOF
     apt clean && apt update -q
   sleep 1
     echo ""
-    echo "Input the server FQDN:"
+    echo "Input the server FQDN: "
     read server_name
   sleep 1
           (echo "${server_name}" > /etc/hostname)
     hostname -F /etc/hostname
-    echo "hostname is:"
+    echo "hostname is: "
     hostname
     printf "Upgrade OS..."
     apt update && apt upgrade -y && apt autoremove -y
@@ -48,13 +48,13 @@ function private_cloud() {
     then
       apt update && apt install $pkg -y
     fi
-    printf "Input ocserv IP address:"
+    printf "Input ocserv IP address: "
     read ocservIP
-    printf "Input port number:"
+    printf "Input port number: "
     read ocPort
-    printf "Input username:"
+    printf "Input username: "
     read ocUsername
-    printf "Input password:"
+    printf "Input password: "
     read ocPassword
     sleep 1
 
@@ -124,13 +124,13 @@ function apply-config() {
 
 function new_install() {
   # Get some data fro instalation
-  printf "Input your FQDN without \"http://\", \"https://\" or \"www\" like bbb.darsplus.com:"
+  printf "Input your FQDN without \"http://\", \"https://\" or \"www\" like bbb.darsplus.com: "
   read FQDN
-  printf "Input E-mail address for generate ssl:"
+  printf "Input E-mail address for generate ssl: "
   read eMail
-  printf "Input turn server FQDN like turn.darsplus.com:"
+  printf "Input turn server FQDN like turn.darsplus.com: "
   read turnServer
-  printf "Input turn server secret key:"
+  printf "Input turn server secret key: "
   read turnSecret
 
   wget -qO- https://ubuntu.bigbluebutton.org/bbb-install.sh | bash -s -- -v xenial-22 -s $FQDN -e $eMail -c $turnServer:$turnSecret -w
@@ -168,11 +168,11 @@ $(ColorGreen '0)') Exit
 $(ColorBlue 'Choose an option:') "
         read a
         case $a in
-	        1) prepair_server ; clear ; menu ;;
-	        2) private_cloud ; clear ; menu ;;
-	        3) mount_nfs ; clear ; menu ;;
-	        4) install_bbb ; clear ; menu ;;
-          5) apply-config ; clear ; menu ;;
+	        1) prepair_server ; sleep 3; clear ; menu ;;
+	        2) private_cloud ; sleep 3; clear ; menu ;;
+	        3) mount_nfs ; sleep 3; clear ; menu ;;
+	        4) install_bbb ; sleep 3; clear ; menu ;;
+          5) apply-config ; sleep 3; clear ; menu ;;
 		0) clear; exit 0 ;;
 		*) echo -e $red"Wrong option."$clear; sleep 1; clear; menu;;
         esac
