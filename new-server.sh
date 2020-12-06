@@ -102,11 +102,11 @@ function install_bbb() {
   if [[ ! -f /etc/systemd/system/openconnect.service ]]
   then
       printf "OpenConnect service not running on the server.\n"
-      printf "Do you need to connect to DarsPlus private cloud?"
+      printf "Do you need to connect to DarsPlus private cloud?\n"
       select yn in "Yes" "No"; do
           case $yn in
               Yes ) private_cloud; break;;
-              No ) exit;;
+              No ) break;;
           esac
       done
       new_install
