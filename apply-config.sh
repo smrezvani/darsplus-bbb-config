@@ -30,7 +30,8 @@ cp bigbluebutton.properties /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.pro
 chmod 444 /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 sleep 1
 
-FQDN=$(sed -n -e '/screenshareRtmpServer/ s/.*\= *//p' bigbluebutton.properties.org)
+# FQDN=$(sed -n -e '/screenshareRtmpServer/ s/.*\= *//p' bigbluebutton.properties.org)
+FQDN=hostname
 SALT=$(sed -n -e '/securitySalt/ s/.*\= *//p' bigbluebutton.properties.org)
 
 sed -i "s,^bigbluebutton.web.serverURL=.*,bigbluebutton.web.serverURL=https://$FQDN,g" /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
