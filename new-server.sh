@@ -141,6 +141,18 @@ function new_install() {
   wget -qO- https://ubuntu.bigbluebutton.org/bbb-install.sh | bash -s -- -v xenial-22 -s $FQDN -e $eMail -c $turnServer:$turnSecret -w
 }
 
+function press_any_key() {
+  printf "\nPress any key to back to menu..."
+  while [ true ] ; do
+  read -t 3 -n 1
+  if [ $? = 0 ] ; then
+    clear ; menu ;
+  else
+  echo "waiting for the keypress"
+  fi
+  done
+}
+
 ##
 # Color  Variables
 ##
@@ -173,11 +185,11 @@ $(ColorGreen '0)') Exit
 $(ColorBlue 'Choose an option:') "
         read a
         case $a in
-	        1) prepair_server ; sleep 3; clear ; menu ;;
-	        2) private_cloud ; sleep 3; clear ; menu ;;
-	        3) mount_nfs ; sleep 3; clear ; menu ;;
-	        4) install_bbb ; sleep 3; clear ; menu ;;
-          5) apply-config ; sleep 3; clear ; menu ;;
+	        1) prepair_server ; press_any_key ;;
+	        2) private_cloud ; press_any_key ;;
+	        3) mount_nfs ; press_any_key ;;
+	        4) install_bbb ; press_any_key ;;
+          5) apply-config ; press_any_key ;;
 		0) clear; exit 0 ;;
 		*) echo -e $red"Wrong option."$clear; sleep 1; clear; menu;;
         esac
