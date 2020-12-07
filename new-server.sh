@@ -123,6 +123,11 @@ function apply-config() {
 }
 
 function new_install() {
+  if [[ -f /etc/bigbluebutton/bbb-conf/apply-config.sh ]]
+  then
+      rm -rf /etc/bigbluebutton/bbb-conf/apply-config.sh
+  fi
+  
   # Get some data fro instalation
   printf "Input your FQDN without \"http://\", \"https://\" or \"www\" like bbb.darsplus.com: "
   read FQDN

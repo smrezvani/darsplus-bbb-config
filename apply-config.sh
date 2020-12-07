@@ -2,6 +2,12 @@
 
 # Pull in the helper functions for configuring BigBlueButton
 source /etc/bigbluebutton/bbb-conf/apply-lib.sh
+SCRIPT_ROOT=/root/darsplus-bbb-config
+# Functions
+function backup_properties() {
+    cp /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties $SCRIPT_ROOT/bigbluebutton.properties.org
+    echo "  - Backup bigbluebutton.properties ------------------------ [Ok]"
+}
 
 # Latest version of properties
 cat << EOF
@@ -17,22 +23,27 @@ printf "This script will run in 5 sec. Press Ctrl+C if you want to stop running 
 
 sleep 5
 
-if [[ ! -f ./bigbluebutton.properties.org ]]
+if [[ ! -f $SCRIPT_ROOT/bigbluebutton.properties.org ]]
 then
-    cp /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties bigbluebutton.properties.org
-    echo "  - Backup bigbluebutton.properties ------------------------ [Ok]"
+    backup_properties
 else
-    echo "  - bigbluebutton.properties backup exist ------------------ [Ok]"
+    printf "bigbluebutton.properties backup exist. Do you want overwrite it?\n"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) backup_properties; break;;
+            No ) break;;
+        esac
+    done
 fi
 
 
-cp bigbluebutton.properties /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
+cp $SCRIPT_ROOT/bigbluebutton.properties /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 chmod 444 /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 sleep 1
 
 # FQDN=$(sed -n -e '/screenshareRtmpServer/ s/.*\= *//p' bigbluebutton.properties.org)
 FQDN=$HOSTNAME
-SALT=$(sed -n -e '/securitySalt/ s/.*\= *//p' bigbluebutton.properties.org)
+SALT=$(sed -n -e '/securitySalt/ s/.*\= *//p' $SCRIPT_ROOT/bigbluebutton.properties.org)
 
 sed -i "s,^bigbluebutton.web.serverURL=.*,bigbluebutton.web.serverURL=https://$FQDN,g" /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 
@@ -57,7 +68,7 @@ yq w -i $HTML5_CONFIG public.app.copyright "@2020 DarsPlus ltd."
 yq w -i $HTML5_CONFIG public.app.helpLink https://darsplus.com/liveclass/
 yq w -i $HTML5_CONFIG public.app.enableNetworkInformation true
 #yq w -i $HTML5_CONFIG public.app.enableLimitOfViewersInWebcam true
-yq w -i $HTML5_CONFIG public.app.mirrorOwnWebcam true
+yq w -i $HTML5_CONFIG public.app.mirrorOwnWebcam false
 yq w -i $HTML5_CONFIG public.app.breakoutRoomLimit 2
 yq w -i $HTML5_CONFIG public.app.defaultSettings.application.overrideLocale fa
 yq w -i $HTML5_CONFIG public.kurento.wsUrl wss://$FQDN/bbb-webrtc-sfu
