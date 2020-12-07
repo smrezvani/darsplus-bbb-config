@@ -43,7 +43,7 @@ sleep 1
 
 # FQDN=$(sed -n -e '/screenshareRtmpServer/ s/.*\= *//p' bigbluebutton.properties.org)
 FQDN=$HOSTNAME
-SALT=$(sed -n -e '/securitySalt/ s/.*\= *//p' $SCRIPT_ROOT/bigbluebutton.properties.org)
+SECRET=$(bbb-conf --secret > $SCRIPT_ROOT/bbb-secret && sed -n -e '/Secret/ s/.*\= *//p' bbb-secret)
 
 sed -i "s,^bigbluebutton.web.serverURL=.*,bigbluebutton.web.serverURL=https://$FQDN,g" /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 
@@ -53,7 +53,7 @@ sed -i "s,^screenshareRtmpServer=.*,screenshareRtmpServer=$FQDN,g" /usr/share/bb
 
 sleep 1
 
-sed -i "s,^securitySalt=.*,securitySalt=$SALT,g" /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
+sed -i "s,^securitySalt=.*,securitySalt=$SECRET,g" /usr/share/bbb-web/WEB-INF/classes/bigbluebutton.properties
 
 echo "  - Apply change to bigbluebutton.properties --------------- [Ok]"
 sleep 1
